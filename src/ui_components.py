@@ -8,14 +8,6 @@ insight cards, gauges, and other visual components.
 import streamlit as st
 import plotly.graph_objects as go
 from typing import Dict, Any, Tuple
-import base64
-from pathlib import Path
-
-@st.cache_data
-def get_base64_bg(bin_file: Path) -> str:
-    with open(bin_file, 'rb') as f:
-        data = f.read()
-    return base64.b64encode(data).decode()
 
 
 def get_theme_css(theme: str = 'dark') -> str:
@@ -32,22 +24,14 @@ def get_theme_css(theme: str = 'dark') -> str:
     str
         CSS styling as a string
     """
-    bg_b64 = ""
-    bg_path = Path(__file__).parent / "assets" / "bg.png"
-    if bg_path.exists():
-        bg_b64 = get_base64_bg(bg_path)
-        
     if theme == 'light':
-        bg_style = f"""
-    .stApp {{
-        background:
-            linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.90)),
-            url("data:image/png;base64,{bg_b64}");
-        background-size: cover;
-        background-position: center;
-        background-attachment: fixed;
-    }}
-        """ if bg_b64 else """
+        return """
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+    * { font-family: 'Poppins', sans-serif; }
+
+    /* Light mode - Clean white background with subtle gradients */
     .stApp {
         background:
             radial-gradient(1200px 620px at 12% -8%, rgba(16, 185, 129, 0.08), transparent 60%),
@@ -56,16 +40,6 @@ def get_theme_css(theme: str = 'dark') -> str:
             linear-gradient(160deg, #ffffff 0%, #f8fafc 48%, #f1f5f9 100%);
         background-attachment: fixed;
     }
-        """
-        
-        return f"""
-<style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
-
-    * {{ font-family: 'Poppins', sans-serif; }}
-
-    /* Light mode - Clean white background with subtle gradients */
-{bg_style}
 
     /* Main hero header with animated gradient */
     .main-header {
@@ -435,16 +409,13 @@ def get_theme_css(theme: str = 'dark') -> str:
 </style>
 """
     else:  # dark theme
-        bg_style = f"""
-    .stApp {{
-        background:
-            linear-gradient(rgba(7, 11, 22, 0.8), rgba(11, 19, 34, 0.85)),
-            url("data:image/png;base64,{bg_b64}");
-        background-size: cover;
-        background-position: center;
-        background-attachment: fixed;
-    }}
-        """ if bg_b64 else """
+        return """
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+    * { font-family: 'Poppins', sans-serif; }
+
+    /* Deep stadium-night background with soft colored light pools */
     .stApp {
         background:
             radial-gradient(1200px 620px at 12% -8%, rgba(16, 185, 129, 0.18), transparent 60%),
@@ -453,16 +424,6 @@ def get_theme_css(theme: str = 'dark') -> str:
             linear-gradient(160deg, #070b16 0%, #0b1322 48%, #080d18 100%);
         background-attachment: fixed;
     }
-        """
-        
-        return f"""
-<style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
-
-    * {{ font-family: 'Poppins', sans-serif; }}
-
-    /* Deep stadium-night background with soft colored light pools */
-{bg_style}
 
     /* Main hero header with animated gradient + float */
     .main-header {
