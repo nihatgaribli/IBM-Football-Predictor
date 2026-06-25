@@ -168,26 +168,35 @@ div[data-testid="stToggle"] > label > p {
             st.error("No matches available")
             return
 
+        # Filter out invalid entries (e.g., from old cached errors)
+        valid_matches = {k: v for k, v in matches.items() if isinstance(v, dict)}
+
+        if not valid_matches:
+            st.error("No valid match data available. Try clearing the app cache.")
+            return
+
         def _match_label(v):
             hs = v.get('home_score')
             aws = v.get('away_score')
+            home = v.get('home', 'Unknown')
+            away = v.get('away', 'Unknown')
             if hs is not None and aws is not None:
-                return f"{v['home']} {hs}–{aws} {v['away']}"
-            return f"{v['home']} vs {v['away']}"
+                return f"{home} {hs}–{aws} {away}"
+            return f"{home} vs {away}"
 
-        match_options = {_match_label(v): k for k, v in matches.items()}
+        match_options = {_match_label(v): k for k, v in valid_matches.items()}
         selected_match_label = st.selectbox(
             "Select a match:",
             options=list(match_options.keys()),
             index=0
         )
         match_id = match_options[selected_match_label]
-        match_info = matches[match_id]
+        match_info = valid_matches[match_id]
 
         hs = match_info.get('home_score')
         aws = match_info.get('away_score')
         score_str = f" **{hs}–{aws}**" if hs is not None else ""
-        st.info(f"**{match_info['home']}**{score_str} vs **{match_info['away']}** · {match_info.get('date', '')}")
+        st.info(f"**{match_info.get('home', 'Unknown')}**{score_str} vs **{match_info.get('away', 'Unknown')}** · {match_info.get('date', '')}")
 
         st.markdown("---")
 
