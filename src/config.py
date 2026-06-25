@@ -61,7 +61,7 @@ CAMERA_PRESETS = {
 # UI Configuration
 # ===========================================================================
 PAGE_CONFIG = {
-    'page_title': "Soccer Tactical Analysis",
+    'page_title': "IBM Granite Soccer Analyst",
     'page_icon': "⚽",
     'layout': "wide",
     'initial_sidebar_state': "expanded"

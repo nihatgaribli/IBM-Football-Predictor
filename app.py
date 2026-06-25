@@ -72,7 +72,7 @@ def main():
     """Main application function."""
 
     # Header
-    st.markdown('<h1 class="main-header">Soccer Tactical Analysis</h1>', unsafe_allow_html=True)
+    st.markdown('<h1 class="main-header">IBM Granite Soccer Analyst</h1>', unsafe_allow_html=True)
     st.markdown(
         '<p class="sub-header">Voronoi-based spatial control · AI tactical insights · World Cup 2022</p>',
         unsafe_allow_html=True
