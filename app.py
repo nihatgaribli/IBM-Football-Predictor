@@ -96,12 +96,11 @@ def main():
         # Load and display logo
         try:
             logo_path = src_path / "assets" / "logo.png"
-            if logo_path.exists():
-                with open(logo_path, "rb") as f:
-                    logo_bytes = f.read()
-                st.image(logo_bytes, use_container_width=True)
+            with open(logo_path, "rb") as f:
+                logo_bytes = f.read()
+            st.image(logo_bytes, use_container_width=True)
         except Exception as e:
-            st.sidebar.error(f"Logo error: {e}")
+            st.sidebar.error(f"Logo error: {e}. Path looked for: {logo_path.absolute()}")
             
         st.markdown("### Configuration")
 
