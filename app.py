@@ -93,6 +93,12 @@ def main():
     # Sidebar — Part 1: Theme + Match Selection
     # ===========================================================================
     with st.sidebar:
+        # Load and display logo
+        try:
+            st.image(str(src_path / "assets" / "logo.png"), use_container_width=True)
+        except Exception:
+            pass
+            
         st.markdown("### Configuration")
 
         # Theme toggle — animated sun/moon switch
